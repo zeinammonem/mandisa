@@ -124,6 +124,11 @@ function LandingPage() {
         </header>
 
         <section className="hero">
+          <div className="hero-background">
+            <span className="hero-circle c1"></span>
+            <span className="hero-circle c2"></span>
+            <span className="hero-circle c3"></span>
+          </div>
           <h1 className="hero__title">We are Launching Soon</h1>
           <p className="hero__description">
             Mandisa Naturals offers premium Egyptian natural products crafted
