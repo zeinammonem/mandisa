@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   FaYoutube,
   FaLinkedin,
@@ -6,9 +6,15 @@ import {
   FaFacebook,
   FaInstagram,
 } from "react-icons/fa6";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 import logo from "../assets/logo.png";
-import img1 from "../assets/img.png";
-import img2 from "../assets/img1.jpg";
+import img1 from "../assets/img1.png";
+import img2 from "../assets/img2.jpg";
 import img3 from "../assets/img3.png";
 import "./landingPage.css";
 
@@ -37,6 +43,7 @@ const calculateCountdown = () => {
 
 function LandingPage() {
   const [countdown, setCountdown] = useState(calculateCountdown);
+  const swiperRef = useRef(null);
 
   useEffect(() => {
     // Update every second
@@ -46,6 +53,34 @@ function LandingPage() {
 
     // Cleanup interval on unmount
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    let slideInterval = null;
+    let step = 0;
+    
+    const startAutoPlay = () => {
+      if (swiperRef.current) {
+        slideInterval = setInterval(() => {
+          if (swiperRef.current && typeof swiperRef.current.slideTo === 'function') {
+            const pattern = [1, 0, 1, 2, 1, 0, 1, 2];
+            const targetSlide = pattern[step % 8];
+            swiperRef.current.slideTo(targetSlide);
+            step++;
+          }
+        }, 3000); // 3 seconds
+      }
+    };
+
+    // Start after a short delay to ensure swiper is initialized
+    const timeout = setTimeout(startAutoPlay, 1000);
+
+    return () => {
+      clearTimeout(timeout);
+      if (slideInterval) {
+        clearInterval(slideInterval);
+      }
+    };
   }, []);
 
   return (
@@ -130,14 +165,46 @@ function LandingPage() {
           </div>
         </div>
         <div className="gallery">
-          {GALLERY_IMAGES.map((src, index) => (
-            <img
-              key={index}
-              src={src}
-              alt={`Mandisa product ${index + 1}`}
-              className={`gallery__image ${index === 1 ? "gallery__image--center" : ""}`}
-            />
-          ))}
+          <Swiper
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            onInit={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            effect={"coverflow"}
+            grabCursor={false}
+            centeredSlides={true}
+            loop={false}
+            slidesPerView={1.5}
+            initialSlide={1}
+            speed={1000}
+            allowTouchMove={false}
+            slideToClickedSlide={false}
+            watchSlidesProgress={true}
+            coverflowEffect={{
+              rotate: 0,
+              stretch: 0,
+              depth: 100,
+              modifier: 2.5,
+              slideShadows: false,
+            }}
+            pagination={{ el: '.swiper-pagination', clickable: false }}
+            modules={[EffectCoverflow, Pagination, Navigation]}
+            className="gallery-swiper"
+          >
+            {GALLERY_IMAGES.map((src, index) => (
+              <SwiperSlide key={index}>
+                <div className="gallery-slide-inner">
+                  <img
+                    src={src}
+                    alt={`Mandisa product ${index + 1}`}
+                    className="gallery__image"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </section>
     </main>
