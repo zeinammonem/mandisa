@@ -101,9 +101,40 @@
   height: 24px;
 }
 
+.header__language-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 1rem;
+}
+
+.header__lang-btn {
+  border: 1px solid #d3b08a;
+  background: transparent;
+  color: #8b7355;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 45px;
+}
+
+.header__lang-btn:hover {
+  background: rgba(211, 176, 138, 0.1);
+  transform: translateY(-1px);
+}
+
+.header__lang-btn.active {
+  background: #d3b08a;
+  color: #3f2a1b;
+  border-color: #d3b08a;
+}
+
 .header__cta {
   border: none;
-  margin-left: 1rem;
+  margin-left: 0;
   background: #d3b08a;
   color: #3f2a1b;
   font-weight: 600;

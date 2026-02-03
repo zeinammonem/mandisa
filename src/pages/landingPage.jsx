@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import {
   FaYoutube,
   FaLinkedin,
@@ -42,8 +43,14 @@ const calculateCountdown = () => {
 };
 
 function LandingPage() {
+  const { t, i18n } = useTranslation();
   const [countdown, setCountdown] = useState(calculateCountdown);
   const swiperRef = useRef(null);
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem('language', lng);
+  };
 
   useEffect(() => {
     // Update every second
@@ -117,8 +124,24 @@ function LandingPage() {
                 <FaInstagram style={{ color: "#C13584" }} />
               </a>
             </div>
+            <div className="header__language-switcher">
+              <button
+                type="button"
+                className={`header__lang-btn ${i18n.language === 'en' ? 'active' : ''}`}
+                onClick={() => changeLanguage('en')}
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                className={`header__lang-btn ${i18n.language === 'ko' ? 'active' : ''}`}
+                onClick={() => changeLanguage('ko')}
+              >
+                KO
+              </button>
+            </div>
             <button type="button" className="header__cta">
-              Register
+              {t('header.register')}
             </button>
           </div>
         </header>
@@ -129,11 +152,9 @@ function LandingPage() {
             <span className="hero-circle c2"></span>
             <span className="hero-circle c3"></span>
           </div>
-          <h1 className="hero__title">We are Launching Soon</h1>
+          <h1 className="hero__title">{t('hero.title')}</h1>
           <p className="hero__description">
-            Mandisa Naturals offers premium Egyptian natural products crafted
-            from pure, sustainable ingredients, combining ancient wellness
-            traditions with modern quality standards for global markets.
+            {t('hero.description')}
           </p>
         </section>
       </div>
@@ -145,28 +166,28 @@ function LandingPage() {
               {String(countdown.days).padStart(2, "0")}
             </span>
             <span className="countdown__divider" aria-hidden="true" />
-            <span className="countdown__label">Days</span>
+            <span className="countdown__label">{t('countdown.days')}</span>
           </div>
           <div className="countdown__item">
             <span className="countdown__value countdown__value--hours">
               {String(countdown.hours).padStart(2, "0")}
             </span>
             <span className="countdown__divider" aria-hidden="true" />
-            <span className="countdown__label">Hours</span>
+            <span className="countdown__label">{t('countdown.hours')}</span>
           </div>
           <div className="countdown__item">
             <span className="countdown__value countdown__value--minutes">
               {String(countdown.minutes).padStart(2, "0")}
             </span>
             <span className="countdown__divider" aria-hidden="true" />
-            <span className="countdown__label">Minutes</span>
+            <span className="countdown__label">{t('countdown.minutes')}</span>
           </div>
           <div className="countdown__item">
             <span className="countdown__value countdown__value--seconds">
               {String(countdown.seconds).padStart(2, "0")}
             </span>
             <span className="countdown__divider" aria-hidden="true" />
-            <span className="countdown__label">Seconds</span>
+            <span className="countdown__label">{t('countdown.seconds')}</span>
           </div>
         </div>
         <div className="gallery">
@@ -203,7 +224,7 @@ function LandingPage() {
                 <div className="gallery-slide-inner">
                   <img
                     src={src}
-                    alt={`Mandisa product ${index + 1}`}
+                    alt={`${t('gallery.product')} ${index + 1}`}
                     className="gallery__image"
                   />
                 </div>

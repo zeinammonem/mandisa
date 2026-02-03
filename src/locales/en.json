@@ -1,0 +1,18 @@
+{
+  "header": {
+    "register": "Register"
+  },
+  "hero": {
+    "title": "We are Launching Soon",
+    "description": "Mandisa Naturals offers premium Egyptian natural products crafted from pure, sustainable ingredients, combining ancient wellness traditions with modern quality standards for global markets."
+  },
+  "countdown": {
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds"
+  },
+  "gallery": {
+    "product": "Mandisa product"
+  }
+}
