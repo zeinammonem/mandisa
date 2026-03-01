@@ -22,7 +22,7 @@ import "./landingPage.css";
 const GALLERY_IMAGES = [img1, img2, img3];
 
 // Set launch date - update this to your desired launch date
-const LAUNCH_DATE = new Date("2026-02-18T00:00:00");
+const LAUNCH_DATE = new Date("2026-04-02T00:00:00");
 
 // Calculate initial countdown values
 const calculateCountdown = () => {
